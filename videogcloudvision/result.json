@@ -1,0 +1,68 @@
+{
+  "responses": [
+    {
+      "labelAnnotations": [
+        {
+          "mid": "/m/03q69",
+          "description": "hair",
+          "score": 0.98074853,
+          "topicality": 0.98074853
+        },
+        {
+          "mid": "/m/0j272k5",
+          "description": "eyewear",
+          "score": 0.96817255,
+          "topicality": 0.96817255
+        },
+        {
+          "mid": "/m/0jyfg",
+          "description": "glasses",
+          "score": 0.96514034,
+          "topicality": 0.96514034
+        },
+        {
+          "mid": "/m/0h8jxfl",
+          "description": "vision care",
+          "score": 0.9234422,
+          "topicality": 0.9234422
+        },
+        {
+          "mid": "/m/0ds4x",
+          "description": "hairstyle",
+          "score": 0.87841815,
+          "topicality": 0.87841815
+        },
+        {
+          "mid": "/m/0bs7_0t",
+          "description": "electronic device",
+          "score": 0.73933226,
+          "topicality": 0.73933226
+        },
+        {
+          "mid": "/m/05r655",
+          "description": "girl",
+          "score": 0.7274886,
+          "topicality": 0.7274886
+        },
+        {
+          "mid": "/m/0fc1fy",
+          "description": "black hair",
+          "score": 0.6937325,
+          "topicality": 0.6937325
+        },
+        {
+          "mid": "/m/02pd__z",
+          "description": "long hair",
+          "score": 0.6686551,
+          "topicality": 0.6686551
+        },
+        {
+          "mid": "/m/017ftj",
+          "description": "sunglasses",
+          "score": 0.665581,
+          "topicality": 0.665581
+        }
+      ]
+    }
+  ]
+}

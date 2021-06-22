@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>HTML Video Vision</title>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+		<video id="video" autoplay onclick="TakePhoto()"></video>
+		<!--<button id="snap" onclick="TakePhoto()">Snap Photo</button>-->
+		<!--<canvas id="canvas" width="640" height="480"></canvas>-->
+		<img id="img">
+		<canvas id="canvas" width="1280" height="720" style="display: none"></canvas>
+
+		<script>
+
+            var CV_URL = 'https://vision.googleapis.com/v1/images:annotate?key=' + 'AIzaSyCOW1DoWbXA83Ft0vWuc4BeNUS1SiRCtVI';
+
+            var canvas = document.getElementById('canvas');
+            var context = canvas.getContext('2d');
+            var video = document.getElementById('video');
+            var img = document.getElementById('img');
+
+            const hdConstraints = {
+                video: {width: {min: 1280}, height: {min: 720}}
+                // video: true
+            };
+
+            navigator.mediaDevices.getUserMedia(hdConstraints).
+            then((stream) => {video.srcObject = stream});
+
+            function hasGetUserMedia() {
+                return !!(navigator.mediaDevices &&
+                    navigator.mediaDevices.getUserMedia);
+            }
+
+            if (hasGetUserMedia()) {
+                // ...
+            } else {
+                alert('getUserMedia() is not supported by your browser');
+            }
+
+            function TakePhoto() {
+
+                context.drawImage(video, 0, 0, 1280, 720);
+
+                // Get canvas contents as a data URL
+                var imgAsDataURL = canvas.toDataURL("image/png");
+                img.setAttribute('src', imgAsDataURL);
+                // console.log(imgAsDataURL);
+
+                sendFileToCloudVision(imgAsDataURL.replace("data:image/png;base64,", ""));
+
+            }
+
+            function sendFileToCloudVision (content) {
+                // alert('Send file to Vision');
+
+	            // console.log('content: ' + content);
+                var request = {
+                    requests: [{
+                        image: {
+                            content: content
+                        },
+                        features: [{
+                            type: "LABEL_DETECTION",
+                            maxResults: 10
+                        }]
+                    }]
+                };
+
+                $.post({
+                    url: CV_URL,
+                    data: JSON.stringify(request),
+                    contentType: 'application/json'
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    console.log('ERRORS: ' + textStatus + ' ' + errorThrown);
+                }).done(displayJSON);
+            }
+
+            function displayJSON (data) {
+                var contents = JSON.stringify(data, null, 4);
+                console.log(contents);
+
+                var _labelDes=JSON.parse(contents).responses[0].labelAnnotations;
+
+                // console.log(_labelDes);
+
+                for(var i in _labelDes)
+                {
+                    // console.log(_labelDes[i]);
+
+                    // if (_labelDes[i].description.includes("glasses")) {
+                    //     console.log("Glasses found!");
+                    // }
+
+                    if (_labelDes[i].description.includes("bottle")
+	                    || _labelDes[i].description.includes("can")
+	                    || _labelDes[i].description.includes("drink")) {
+                    	console.log("Beer found!");
+                    	alert('Beer found!');
+                    }
+                }
+
+            }
+		</script>
+
+	</head>
+	<body>
+
+
+	</body>
+</html>
